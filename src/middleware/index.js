@@ -11,7 +11,7 @@ module.exports = function (app) {
   /// ////////////// TRANSACTIONS //////////////////////
 
   app.get('/api/transactions/count', async function (req, res) {
-    const result = await app.service('transactions').find({ query: { $limit: 1 } })
+    const result = await app.service('transactions').find({ query: { $limit: 0 } })
     res.send(result)
   })
 
