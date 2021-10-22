@@ -76,5 +76,47 @@ module.exports =  function (app) {
     res.send(result);
   })
 
+
+  ///////////////// BLOCKS //////////////////////
+
+  app.get('/api/blocks', async function (req, res) {
+    const result = await connectApi.then(api => api.rpc.chain.getBlock())
+    res.send(result);
+  })
+
+  app.get('/api/blocks/num/:blockNumber', async function (req, res) {
+    const blockNumber = req.params.blockNumber;
+    const result = await connectApi.then(api => api.rpc.chain.getBlockHash(blockNumber));
+    res.send(result);
+  })
+
+  app.get('/api/blocks/hash/:blockHash', async function (req, res) {
+    const blockHash = req.params.blockHash;
+    const result = await connectApi.then(api => api.rpc.chain.getBlock(blockHash));
+    res.send(result);
+  })
+
+  app.get('/api/blocks/:x/:n', async function (req, res) {
+    const x = req.params.x;
+    const n = req.params.n;
+
+    const result = await connectApi.then( async api => {
+        let i = 1;
+        let blocks = [];
+        
+        while (i <= x)  {
+            let tempBlock = await api.rpc.chain.getBlockHash(n-i);
+            blocks.push(tempBlock);
+            i++;
+        }
+
+        return blocks;
+    })
+    
+    res.send(result);
+  })
+
+
+
   
 }
