@@ -28,7 +28,7 @@
     "lint": "standard",
     "dev": "nodemon src/",
     "start": "node src/",
-    "jest": "jest  --forceExit"
+    "jest": "jest --testTimeout=50000 --forceExit"
   },
   "standard": {
     "env": [
