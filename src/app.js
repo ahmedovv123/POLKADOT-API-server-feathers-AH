@@ -8,13 +8,14 @@ const logger = require('./logger')
 const feathers = require('@feathersjs/feathers')
 const configuration = require('@feathersjs/configuration')
 const express = require('@feathersjs/express')
+const swagger = require('feathers-swagger')
 
 const middleware = require('./middleware')
 const services = require('./services')
 const appHooks = require('./app.hooks')
 const channels = require('./channels')
 
-const sequelize = require('./sequelize');
+const sequelize = require('./sequelize')
 
 const app = express(feathers())
 
@@ -35,7 +36,23 @@ app.use('/', express.static(app.get('public')))
 // Set up Plugins and providers
 app.configure(express.rest())
 
-app.configure(sequelize);
+app.configure(swagger({
+  specs: {
+    info: {
+      title: 'Polkadot server API using feathers',
+      version: '1.0.0',
+      description: 'Polkadot Api for interact interacting with node',
+      contact: {
+        name: 'Ahmet',
+        email: 'ahmedovv123@gmail.com'
+      }
+    },
+    schemes: ['http']
+  },
+  uiIndex: true
+}))
+
+app.configure(sequelize)
 
 // Configure other middleware (see `middleware/index.js`)
 app.configure(middleware)

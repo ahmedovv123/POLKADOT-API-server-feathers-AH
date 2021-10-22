@@ -1,5 +1,5 @@
-const { Service } = require('feathers-sequelize');
+const { Service } = require('feathers-sequelize')
 
 exports.Transactions = class Transactions extends Service {
-  
-};
+
+}
